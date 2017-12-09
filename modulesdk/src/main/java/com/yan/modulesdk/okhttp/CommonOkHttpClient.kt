@@ -1,6 +1,7 @@
-package com.yan.modulesdk
+package com.yan.modulesdk.okhttp
 
 import com.yan.modulesdk.okhttp.https.HttpsUtils
+import com.yan.modulesdk.okhttp.listener.DisposeDataHandle
 import com.yan.modulesdk.okhttp.response.CommonJsonCallback
 import okhttp3.Call
 import okhttp3.OkHttpClient
@@ -38,9 +39,9 @@ object CommonOkHttpClient {
     /**
      * 发送具体的http/https请求
      */
-    fun sendRequest(request: Request, callback: CommonJsonCallback): Call {
+    fun sendRequest(request: Request, handle: DisposeDataHandle): Call {
         val call = mOkHttpClient.newCall(request)
-        call.enqueue(callback)
+        call.enqueue(CommonJsonCallback(handle))
         return call
     }
 }

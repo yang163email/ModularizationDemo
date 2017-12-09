@@ -1,11 +1,10 @@
 package com.yan.modularization.ui.fragment
 
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import com.yan.modularization.R
 import com.yan.modularization.base.BaseFragment
 
 /**
@@ -17,10 +16,6 @@ class MessageFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        val textView = TextView(mContext)
-        textView.setText(TAG)
-        textView.gravity = Gravity.CENTER
-        textView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT)
-        return textView
+        return inflater?.inflate(R.layout.fragment_message_layout, container, false)
     }
 }
