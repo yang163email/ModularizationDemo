@@ -1,6 +1,5 @@
 package com.yan.modulesdk.okhttp.request
 
-import com.yan.modulesdk.RequestParams
 import okhttp3.FormBody
 import okhttp3.Request
 
@@ -26,13 +25,15 @@ object CommonRequest {
     /**
      * 创建get请求request
      */
-    fun createGetRequest(url: String, params: RequestParams): Request {
+    fun createGetRequest(url: String, params: RequestParams? = null): Request {
         val stringBuilder = StringBuilder(url).append("?")
-        params.urlParams.forEach {
-            stringBuilder.append(it.key)
-                    .append("=")
-                    .append(it.value)
-                    .append("&")
+        params?.let {
+            it.urlParams.forEach {
+                stringBuilder.append(it.key)
+                        .append("=")
+                        .append(it.value)
+                        .append("&")
+            }
         }
         return Request.Builder()
                 .url(stringBuilder.substring(0, stringBuilder.length - 1))
