@@ -2,11 +2,10 @@ package com.yan.modulesdk
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.yan.modulesdk.okhttp.listener.DisposeDataHandle
+import com.yan.modulesdk.okhttp.listener.DisposeDataListener
 import com.yan.modulesdk.okhttp.request.CommonRequest
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.Response
-import java.io.IOException
+import com.yan.modulesdk.okhttp.response.CommonJsonCallback
 
 /**
  *  @author      : 楠GG
@@ -21,15 +20,21 @@ class TestActivity : AppCompatActivity() {
 
     fun test() {
         CommonOkHttpClient.sendRequest(
-                CommonRequest.createGetRequest("www.hhh"),
-                object : Callback{
-            override fun onFailure(call: Call?, e: IOException?) {
+                CommonRequest.createGetRequest("www.baidu.com"),
+                object : CommonJsonCallback(
+                        object : DisposeDataHandle(
+                                object : DisposeDataListener {
+                                    override fun onSuccess(any: Any) {
 
-            }
+                                    }
 
-            override fun onResponse(call: Call?, response: Response?) {
-            }
+                                    override fun onFailed(any: Any) {
 
-        })
+                                    }
+
+                                }
+                        ) {}
+                ) {}
+        )
     }
 }

@@ -1,8 +1,8 @@
 package com.yan.modulesdk
 
 import com.yan.modulesdk.okhttp.https.HttpsUtils
+import com.yan.modulesdk.okhttp.response.CommonJsonCallback
 import okhttp3.Call
-import okhttp3.Callback
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.util.concurrent.TimeUnit
@@ -38,7 +38,7 @@ object CommonOkHttpClient {
     /**
      * 发送具体的http/https请求
      */
-    fun sendRequest(request: Request, callback: Callback): Call {
+    fun sendRequest(request: Request, callback: CommonJsonCallback): Call {
         val call = mOkHttpClient.newCall(request)
         call.enqueue(callback)
         return call
