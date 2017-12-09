@@ -10,10 +10,10 @@ interface DisposeDataListener {
     /**
      * 请求成功回调处理
      */
-    fun onSuccess(any: Any)
+    fun onSuccess(responseObj: Any)
 
     /**
      * 请求失败回调
      */
-    fun onFailed(any: Any)
+    fun onFailed(responseObj: Any)
 }

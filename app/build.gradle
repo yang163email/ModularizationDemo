@@ -31,6 +31,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
+    //anko
+    compile 'org.jetbrains.anko:anko-commons:0.10.3'
     //circleimageview
     compile 'de.hdodenhof:circleimageview:2.2.0'
     compile project(path: ':modulesdk')

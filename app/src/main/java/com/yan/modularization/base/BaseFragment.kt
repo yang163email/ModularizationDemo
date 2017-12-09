@@ -23,7 +23,7 @@ abstract class BaseFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        init()
+        initView()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -35,6 +35,6 @@ abstract class BaseFragment : Fragment() {
 
     }
 
-    protected open fun init() { }
+    protected open fun initView() { }
 
 }

@@ -34,9 +34,20 @@ class ImageLoaderManager private constructor(context: Context){
         const val CONNECTION_TIME_OUT = 5 * 100
         /** 读取的超时时间 */
         const val READ_TIME_OUT = 5 * 100
-    }
 
-    private var sInstance: ImageLoaderManager? = null
+        private var sInstance: ImageLoaderManager? = null
+
+        fun getInstance(context: Context): ImageLoaderManager {
+            if (sInstance == null) {
+                synchronized(ImageLoaderManager::class.java) {
+                    if (sInstance == null) {
+                        sInstance = ImageLoaderManager(context)
+                    }
+                }
+            }
+            return sInstance!!
+        }
+    }
 
     private var mImageLoader: ImageLoader
 
@@ -59,17 +70,6 @@ class ImageLoaderManager private constructor(context: Context){
         mImageLoader = ImageLoader.getInstance()
     }
 
-    fun getInstance(context: Context): ImageLoaderManager {
-        if (sInstance == null) {
-            synchronized(ImageLoaderManager::class.java) {
-                if (sInstance == null) {
-                    sInstance = ImageLoaderManager(context)
-                }
-            }
-        }
-        return sInstance!!
-    }
-
     private fun getDefaultOptions(): DisplayImageOptions? {
         return DisplayImageOptions.Builder()
                 .showImageForEmptyUri(R.drawable.xadsdk_img_error)  //下载图片为空时
@@ -85,7 +85,7 @@ class ImageLoaderManager private constructor(context: Context){
      * 加载图片API
      */
     fun displayImage(imageView: ImageView,
-                     url: String,
+                     url: String?,
                      options: DisplayImageOptions? = null,
                      listener: ImageLoadingListener? = null) {
         mImageLoader.displayImage(url, imageView, options, listener)
