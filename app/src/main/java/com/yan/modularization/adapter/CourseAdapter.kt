@@ -5,6 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.yan.modularization.module.recommend.RecommendBodyValue
+import com.yan.modularization.widget.CardOneItemView
+import com.yan.modularization.widget.CardThreeItemView
+import com.yan.modularization.widget.CardTwoItemView
 import com.yan.modularization.widget.VideoItemView
 
 /**
@@ -30,17 +33,25 @@ class CourseAdapter(val mContext: Context, val mData: List<RecommendBodyValue>) 
 
     override fun getCount(): Int = mData.size
 
+    override fun getItemViewType(position: Int): Int {
+        val value = getItem(position) as RecommendBodyValue
+        return value.type
+    }
+
+    override fun getViewTypeCount(): Int = CARD_COUNT
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
         val type = getItemViewType(position)
         var itemView = convertView
         var viewHolder: ViewHolder? = null
         if (convertView == null) {
             when(type) {
-                VIDEO_TYPE -> {
-                    itemView = VideoItemView(mContext)
-                    viewHolder = ViewHolder(itemView)
-                }
+                VIDEO_TYPE -> itemView = VideoItemView(mContext)
+                CARD_TYPE_ONE -> itemView = CardOneItemView(mContext)
+                CARD_TYPE_TWO -> itemView = CardTwoItemView(mContext)
+                CARD_TYPE_THREE -> itemView = CardThreeItemView(mContext)
             }
+            viewHolder = ViewHolder(itemView)
             itemView?.tag = viewHolder
         } else {
             viewHolder = itemView?.tag as ViewHolder?
@@ -49,6 +60,18 @@ class CourseAdapter(val mContext: Context, val mData: List<RecommendBodyValue>) 
         when(type) {
             VIDEO_TYPE -> {
                 val videoItemView = viewHolder?.itemView as VideoItemView
+                videoItemView.bindView(mData[position])
+            }
+            CARD_TYPE_ONE -> {
+                val videoItemView = viewHolder?.itemView as CardOneItemView
+                videoItemView.bindView(mData[position])
+            }
+            CARD_TYPE_TWO -> {
+                val videoItemView = viewHolder?.itemView as CardTwoItemView
+                videoItemView.bindView(mData[position])
+            }
+            CARD_TYPE_THREE -> {
+                val videoItemView = viewHolder?.itemView as CardThreeItemView
                 videoItemView.bindView(mData[position])
             }
         }

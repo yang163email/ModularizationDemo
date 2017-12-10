@@ -11,7 +11,7 @@ import java.util.*
  * @description : 搜索实体
  */
 data class RecommendBodyValue(
-        var type: Int?,
+        var type: Int = 0,
         var logo: String?,
         var title: String?,
         var info: String?,
