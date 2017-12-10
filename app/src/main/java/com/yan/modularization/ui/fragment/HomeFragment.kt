@@ -79,7 +79,6 @@ class HomeFragment : BaseFragment() {
     override fun onRequestPermissionsResult(
             requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        Log.d(TAG, "onRequestPermissionsResult: ------------------------")
         if (requestCode == REQ_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 context.startActivity<CaptureActivity>()
