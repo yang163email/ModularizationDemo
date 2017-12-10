@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.yan.modularization.module.recommend.RecommendBodyValue
+import com.yan.modularization.utils.Util
 import com.yan.modularization.widget.CardOneItemView
 import com.yan.modularization.widget.CardThreeItemView
 import com.yan.modularization.widget.CardTwoItemView
@@ -72,7 +73,8 @@ class CourseAdapter(val mContext: Context, val mData: List<RecommendBodyValue>) 
             }
             CARD_TYPE_THREE -> {
                 val videoItemView = viewHolder?.itemView as CardThreeItemView
-                videoItemView.bindView(mData[position])
+                val list = Util.handleData(mData[position])
+                videoItemView.bindView(list)
             }
         }
 

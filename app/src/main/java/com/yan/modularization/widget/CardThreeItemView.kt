@@ -5,8 +5,12 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
 import com.yan.modularization.R
+import com.yan.modularization.adapter.HotSalePagerAdapter
 import com.yan.modularization.module.recommend.RecommendBodyValue
 import com.yan.modulesdk.imageloader.ImageLoaderManager
+import kotlinx.android.synthetic.main.item_product_card_three_layout.view.*
+import org.jetbrains.anko.dip
+import java.util.*
 
 /**
  *  @author      : 楠GG
@@ -25,7 +29,12 @@ class CardThreeItemView : RelativeLayout {
         mImageLoader = ImageLoaderManager.getInstance(context)
     }
 
-    fun bindView(bean: RecommendBodyValue) {
-
+    fun bindView(list: ArrayList<RecommendBodyValue>) {
+        view_pager.apply {
+            pageMargin = dip(12)
+            adapter = HotSalePagerAdapter(context, list)
+            val i = Int.MAX_VALUE / 2
+            currentItem = list.size % i
+        }
     }
 }
