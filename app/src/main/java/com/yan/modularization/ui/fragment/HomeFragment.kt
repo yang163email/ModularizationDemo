@@ -11,6 +11,7 @@ import com.yan.modularization.adapter.CourseAdapter
 import com.yan.modularization.base.BaseFragment
 import com.yan.modularization.module.recommend.BaseRecommendModel
 import com.yan.modularization.net.http.RequestCenter
+import com.yan.modularization.widget.home.HomeHeaderLayout
 import com.yan.modulesdk.okhttp.listener.DisposeDataListener
 import kotlinx.android.synthetic.main.fragment_home_layout.*
 import org.jetbrains.anko.toast
@@ -53,11 +54,15 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun showSuccessView() {
-        loading_view.visibility = View.GONE
-        list_view.visibility = View.VISIBLE
-
         val list = mRecommendData?.data?.list
         if (list != null && list.size > 0) {
+            loading_view.visibility = View.GONE
+            list_view.visibility = View.VISIBLE
+
+            //给listview添加头布局
+            var homeHeaderLayout = HomeHeaderLayout(context, mRecommendData!!.data!!.head!!)
+            list_view.addHeaderView(homeHeaderLayout)
+            //创建adapter
             mCourseAdapter = CourseAdapter(mContext, list)
             list_view.adapter = mCourseAdapter
         } else {

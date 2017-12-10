@@ -52,7 +52,7 @@ class HotSalePagerAdapter(
         rootView.gonggao_view.text = bean.info
         rootView.sale_num_view.text = bean.text
         imageViews.forEachWithIndex{i, imageView ->
-            mImageLoader.displayImage(imageViews[i], bean.url?.get(i))
+            mImageLoader.displayImage(imageView, bean.url?.get(i))
         }
         container.addView(rootView, 0)
         return rootView

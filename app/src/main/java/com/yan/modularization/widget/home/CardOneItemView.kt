@@ -1,4 +1,4 @@
-package com.yan.modularization.widget
+package com.yan.modularization.widget.home
 
 import android.annotation.SuppressLint
 import android.content.Context

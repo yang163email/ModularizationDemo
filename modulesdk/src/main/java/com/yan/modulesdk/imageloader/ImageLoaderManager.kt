@@ -19,7 +19,7 @@ import com.yan.modulesdk.R
  *  @date        : 2017/12/9 17:50
  *  @description : 初始化UniversalImageLoader，并用来加载网络图片
  */
-class ImageLoaderManager private constructor(context: Context){
+class ImageLoaderManager private constructor(context: Context?){
     /**
      * 存放一些默认参数值
      */
@@ -37,7 +37,7 @@ class ImageLoaderManager private constructor(context: Context){
 
         private var sInstance: ImageLoaderManager? = null
 
-        fun getInstance(context: Context): ImageLoaderManager {
+        fun getInstance(context: Context?): ImageLoaderManager {
             if (sInstance == null) {
                 synchronized(ImageLoaderManager::class.java) {
                     if (sInstance == null) {

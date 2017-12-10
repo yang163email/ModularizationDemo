@@ -1,4 +1,4 @@
-package com.yan.modularization.widget
+package com.yan.modularization.widget.home
 
 import android.content.Context
 import android.util.AttributeSet

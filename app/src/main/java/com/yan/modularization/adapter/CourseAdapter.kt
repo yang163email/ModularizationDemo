@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.yan.modularization.module.recommend.RecommendBodyValue
 import com.yan.modularization.utils.Util
-import com.yan.modularization.widget.CardOneItemView
-import com.yan.modularization.widget.CardThreeItemView
-import com.yan.modularization.widget.CardTwoItemView
-import com.yan.modularization.widget.VideoItemView
+import com.yan.modularization.widget.home.CardOneItemView
+import com.yan.modularization.widget.home.CardThreeItemView
+import com.yan.modularization.widget.home.CardTwoItemView
+import com.yan.modularization.widget.home.VideoItemView
 
 /**
  *  @author      : 楠GG
@@ -77,7 +77,6 @@ class CourseAdapter(val mContext: Context, val mData: List<RecommendBodyValue>) 
                 videoItemView.bindView(list)
             }
         }
-
         return itemView
     }
 
