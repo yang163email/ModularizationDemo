@@ -97,4 +97,5 @@ class HomeActivity : BaseActivity(), View.OnClickListener {
             ft.hide(it)
         }
     }
+
 }

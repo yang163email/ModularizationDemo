@@ -65,7 +65,7 @@ public final class ViewfinderView extends View {
     private static final int CORNER_WIDTH = 5;
 
 
-    private static final int SPEEN_DISTANCE = 5;
+    private static final int SPEED_DISTANCE = 5;
 
 
     private static float density;
@@ -76,6 +76,9 @@ public final class ViewfinderView extends View {
     private int slideTop;
     private int slideBottom;
     private boolean isFirst;
+
+    //自定义矩形
+    Rect lineRect = new Rect();
 
     // This constructor is used when the class is built from an XML resource.
     public ViewfinderView(Context context, AttributeSet attrs) {
@@ -141,11 +144,11 @@ public final class ViewfinderView extends View {
             canvas.drawRect(frame.right - CORNER_WIDTH, frame.bottom
                     - ScreenRate, frame.right, frame.bottom, paint);
 
-            slideTop += SPEEN_DISTANCE;
+            slideTop += SPEED_DISTANCE;
             if (slideTop >= frame.bottom) {
                 slideTop = frame.top;
             }
-            Rect lineRect = new Rect();
+
             lineRect.left = frame.left;
             lineRect.right = frame.right;
             lineRect.top = slideTop;
@@ -164,7 +167,7 @@ public final class ViewfinderView extends View {
             canvas.drawText(
                     text,
                     (width - textWidth) / 2,
-                    (float) (frame.bottom + (float) TEXT_PADDING_TOP * density),
+                    frame.bottom + (float) TEXT_PADDING_TOP * density,
                     paint);
 
             Collection<ResultPoint> currentPossible = possibleResultPoints;

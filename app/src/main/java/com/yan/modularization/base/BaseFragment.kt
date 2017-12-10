@@ -24,7 +24,10 @@ abstract class BaseFragment : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         initView()
+        initListener()
     }
+
+    protected open fun initListener() {}
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

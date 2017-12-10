@@ -1,7 +1,10 @@
 package com.yan.modularization.ui.fragment
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,8 +15,10 @@ import com.yan.modularization.base.BaseFragment
 import com.yan.modularization.module.recommend.BaseRecommendModel
 import com.yan.modularization.net.http.RequestCenter
 import com.yan.modularization.widget.home.HomeHeaderLayout
+import com.yan.modularization.zxing.app.CaptureActivity
 import com.yan.modulesdk.okhttp.listener.DisposeDataListener
 import kotlinx.android.synthetic.main.fragment_home_layout.*
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
 /**
@@ -22,6 +27,10 @@ import org.jetbrains.anko.toast
  *  @description : 首页fragment
  */
 class HomeFragment : BaseFragment() {
+
+    companion object {
+        val REQ_CODE = 10
+    }
 
     var mRecommendData: BaseRecommendModel? = null
     var mCourseAdapter: CourseAdapter? = null
@@ -35,6 +44,20 @@ class HomeFragment : BaseFragment() {
         super.initView()
         val drawable = loading_view.drawable as AnimationDrawable
         drawable.start()
+    }
+
+    override fun initListener() {
+        qrcode_view.setOnClickListener { checkPermission() }
+    }
+
+    /**
+     * 检查权限
+     */
+    private fun checkPermission() {
+        val permission = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(arrayOf(Manifest.permission.CAMERA), REQ_CODE)
+        } else mContext.startActivity<CaptureActivity>()
     }
 
     override fun initData() {
@@ -51,6 +74,17 @@ class HomeFragment : BaseFragment() {
                 Log.e(TAG, "onFailed: $responseObj")
             }
         })
+    }
+
+    override fun onRequestPermissionsResult(
+            requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        Log.d(TAG, "onRequestPermissionsResult: ------------------------")
+        if (requestCode == REQ_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                context.startActivity<CaptureActivity>()
+            }
+        }
     }
 
     private fun showSuccessView() {

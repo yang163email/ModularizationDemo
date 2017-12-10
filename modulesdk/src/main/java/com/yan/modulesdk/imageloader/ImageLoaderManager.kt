@@ -63,7 +63,7 @@ class ImageLoaderManager private constructor(context: Context?){
                 .defaultDisplayImageOptions(getDefaultOptions())    //默认的图片加载Options
                 .imageDownloader(BaseImageDownloader(context, CONNECTION_TIME_OUT,
                         READ_TIME_OUT)) //设置图片下载器
-                .writeDebugLogs()   //debug环境下输出日志
+//                .writeDebugLogs()   //debug环境下输出日志
                 .build()
 
         ImageLoader.getInstance().init(configuration)
