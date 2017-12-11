@@ -2,6 +2,11 @@ package com.yan.modulesdk.adutils
 
 import android.util.Log
 
+/**
+ *  @author      : 楠GG
+ *  @date        : 2017/12/11 19:31
+ *  @description : log工具类
+ */
 object LogUtils {
 
     private val DEBUG = true
@@ -42,7 +47,7 @@ object LogUtils {
         if (DEBUG) Log.w(tag, tr)
     }
 
-    fun e(tag: String, msg: String) {
+    fun e(tag: String, msg: String?) {
         if (DEBUG) Log.e(tag, checkMsg(msg))
     }
 

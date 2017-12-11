@@ -1,19 +1,19 @@
 package com.yan.modulesdk.constant
 
 /**
- * @author: qndroid
- * @function: 用来存放sdk中用到的常量。
- * @date: 16/6/1
+ *  @author      : 楠GG
+ *  @date        : 2017/12/11 19:32
+ *  @description : 用来存放sdk中用到的常量。
  */
 object SDKConstant {
 
     //毫秒单位
-    var MILLION_UNIT = 1000
+    const val MILLION_UNIT = 1000
 
     //自动播放阈值
-    var VIDEO_SCREEN_PERCENT = 50
+    const val VIDEO_SCREEN_PERCENT = 50
 
-    var VIDEO_HEIGHT_PERCENT = 9 / 16.0f
+    const val VIDEO_HEIGHT_PERCENT = 9 / 16.0f
 
     //素材类型
     val MATERIAL_IMAGE = "image"
