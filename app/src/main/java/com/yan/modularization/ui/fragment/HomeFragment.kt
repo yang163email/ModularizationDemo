@@ -1,6 +1,8 @@
 package com.yan.modularization.ui.fragment
 
 import android.Manifest
+import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
@@ -9,6 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.yan.modularization.R
 import com.yan.modularization.adapter.CourseAdapter
 import com.yan.modularization.base.BaseFragment
@@ -16,9 +19,9 @@ import com.yan.modularization.module.recommend.BaseRecommendModel
 import com.yan.modularization.net.http.RequestCenter
 import com.yan.modularization.widget.home.HomeHeaderLayout
 import com.yan.modularization.zxing.app.CaptureActivity
+import com.yan.modulesdk.activity.AdBrowserActivity
 import com.yan.modulesdk.okhttp.listener.DisposeDataListener
 import kotlinx.android.synthetic.main.fragment_home_layout.*
-import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
 /**
@@ -30,6 +33,7 @@ class HomeFragment : BaseFragment() {
 
     companion object {
         val REQ_CODE = 10
+        val REQ_QR_CODE = 0x01
     }
 
     var mRecommendData: BaseRecommendModel? = null
@@ -57,7 +61,12 @@ class HomeFragment : BaseFragment() {
         val permission = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
         if (permission != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(arrayOf(Manifest.permission.CAMERA), REQ_CODE)
-        } else mContext.startActivity<CaptureActivity>()
+        } else doOpenCamera()
+    }
+
+    private fun doOpenCamera() {
+        val intent = Intent(context, CaptureActivity::class.java)
+        startActivityForResult(intent, REQ_QR_CODE)
     }
 
     override fun initData() {
@@ -81,7 +90,25 @@ class HomeFragment : BaseFragment() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQ_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                context.startActivity<CaptureActivity>()
+                doOpenCamera()
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when (requestCode) {
+            REQ_QR_CODE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    val code = data?.getStringExtra("SCAN_RESULT")?:""
+                    Log.e(TAG, "onActivityResult: $code")
+                    if (code.contains("http") || code.contains("https")) {
+                        val intent = Intent(mContext, AdBrowserActivity::class.java)
+                        intent.putExtra(AdBrowserActivity.KEY_URL, code)
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(mContext, code, Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
     }

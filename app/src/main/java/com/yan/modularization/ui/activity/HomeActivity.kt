@@ -1,15 +1,21 @@
 package com.yan.modularization.ui.activity
 
+import android.content.Intent
+import android.graphics.Bitmap
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
+import android.util.Log
 import android.view.View
+import android.widget.ImageView
+import android.widget.RelativeLayout
 import com.yan.modularization.R
 import com.yan.modularization.base.BaseActivity
 import com.yan.modularization.ui.fragment.HomeFragment
 import com.yan.modularization.ui.fragment.MessageFragment
 import com.yan.modularization.ui.fragment.MineFragment
 import kotlinx.android.synthetic.main.activity_home_layout.*
+import org.jetbrains.anko.dip
 
 /**
  *  @author      : 楠GG
@@ -101,4 +107,21 @@ class HomeActivity : BaseActivity(), View.OnClickListener {
         fragment?.let { ft.hide(it) }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.e(TAG, "onActivityResult: requestCode:$requestCode---resultCode:$resultCode---")
+        val result = data?.getStringExtra("result")
+        val bitmap = data?.getParcelableExtra<Bitmap>("QR_CODE")
+        Log.e(TAG, "onActivityResult: $result")
+        Log.e(TAG, "onActivityResult: $bitmap")
+        //bitmap 是生成的二维码图片
+        bitmap?.let {
+            val imageView = ImageView(this)
+            imageView.setImageBitmap(bitmap)
+            val params = RelativeLayout.LayoutParams(dip(200), dip(200))
+            params.addRule(RelativeLayout.CENTER_IN_PARENT)
+            imageView.layoutParams = params
+            content_layout.addView(imageView)
+        }
+    }
 }

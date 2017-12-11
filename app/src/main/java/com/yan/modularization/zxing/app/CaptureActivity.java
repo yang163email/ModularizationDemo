@@ -521,6 +521,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             uri = data.getData();
+            Log.e(TAG, "onActivityResult: " + uri);
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -551,7 +552,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         Hashtable<DecodeHintType, String> hints = new Hashtable<DecodeHintType, String>();
         hints.put(DecodeHintType.CHARACTER_SET, "utf-8"); // 设置二维码内容的编码
         try {
-            Bitmap scanBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
+            Bitmap scanBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(path));
 
             RGBLuminanceSource source = new RGBLuminanceSource(scanBitmap);
             BinaryBitmap bitmap1 = new BinaryBitmap(new HybridBinarizer(source));
